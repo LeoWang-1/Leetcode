@@ -5,9 +5,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-public class Lc102BinaryTreeLevelOrderTraversal {
+public class Lc107BinaryTreeLevelOrderTraversalII {
     class Solution {
-        public List<List<Integer>> levelOrder(TreeNode root) {
+        public List<List<Integer>> levelOrderBottom(TreeNode root) {
             // Corner case
             if (root == null) return new ArrayList<>();
 
@@ -15,17 +15,18 @@ public class Lc102BinaryTreeLevelOrderTraversal {
             Queue<TreeNode> queue = new LinkedList<>();
             queue.offer(root);
 
-            while(!queue.isEmpty()) {
+            while (!queue.isEmpty()) {
                 int size = queue.size();
                 List<Integer> nodeSameLevel = new ArrayList<>();
                 while (size > 0) {
                     TreeNode curNode = queue.poll();
-                    nodeSameLevel.add(curNode.val);
                     if (curNode.left != null) queue.offer(curNode.left);
                     if (curNode.right != null) queue.offer(curNode.right);
-                    size--;
+                    nodeSameLevel.add(curNode.val);
+                    size --;
                 }
-                nodeWithLevelOrder.add(nodeSameLevel);
+
+                nodeWithLevelOrder.add(0, nodeSameLevel);
             }
 
             return nodeWithLevelOrder;
@@ -36,7 +37,8 @@ public class Lc102BinaryTreeLevelOrderTraversal {
         int val;
         TreeNode left;
         TreeNode right;
-        TreeNode() { }
+        TreeNode() {
+        }
         TreeNode(int val) {
             this.val = val;
         }
