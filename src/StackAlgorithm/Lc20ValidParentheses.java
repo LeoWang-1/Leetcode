@@ -1,5 +1,7 @@
 package StackAlgorithm;
 
+import java.util.Stack;
+
 public class Lc20ValidParentheses {
     class Solution {
         public boolean isValid(String s) {
