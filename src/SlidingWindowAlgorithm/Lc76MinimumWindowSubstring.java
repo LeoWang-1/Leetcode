@@ -1,4 +1,4 @@
-package StringAlgorithm;
+package SlidingWindowAlgorithm;
 
 public class Lc76MinimumWindowSubstring {
     class Solution {
