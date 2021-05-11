@@ -2,35 +2,39 @@ package BinaryTreeAlgorithm;
 
 public class Lc1644LowestCommonAncestorofaBinaryTreeII {
     class Solution {
+        // Fields
+        int count = 0;
 
         public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
             // Corner case
-            if (root == null) return null;
+            if (root == null) return root;
 
-            Pair pair = lowestCommonAncestorHelper(root, p, q);
-            if (pair.numOfNode == 2) return pair.node;
-            else return null;
+            // Check whether tree has two nodes
+            isTwoNodesExist(root, p, q);
+            if (count != 2) return null;
+            return findLCA(root, p, q);
         }
 
-        private Pair lowestCommonAncestorHelper(TreeNode root, TreeNode p, TreeNode q) {
+        private void isTwoNodesExist(TreeNode root, TreeNode p, TreeNode q) {
             // Base case
-            if (root == null) return new Pair(null, 0);
+            if (root == null) return;
 
-            Pair leftChildPair = lowestCommonAncestorHelper(root.left, p, q);
-            Pair rightChildPair = lowestCommonAncestorHelper(root.right, p, q);
-
-            if (root.val == p.val || root.val == q.val) return new Pair(root, 1 + leftChildPair.numOfNode + rightChildPair.numOfNode);
-            if (leftChildPair.numOfNode != 0 && rightChildPair.numOfNode != 0) return new Pair(root, 2);
-            return leftChildPair.numOfNode == 0 ? rightChildPair : leftChildPair;
+            // Next steps
+            if (root == p || root == q) count ++;
+            isTwoNodesExist(root.left, p, q);
+            isTwoNodesExist(root.right, p, q);
         }
 
-        private class Pair{
-            TreeNode node = null;
-            int numOfNode = 0;
-            Pair (TreeNode node, int numOfNode) {
-                this.node = node;
-                this.numOfNode = numOfNode;
-            }
+        private TreeNode findLCA(TreeNode root, TreeNode p, TreeNode q) {
+            // Base case
+            if (root == null) return null;
+            if (root == p || root == q) return root;
+
+            TreeNode leftChild = findLCA(root.left, p, q);
+            TreeNode rightChild = findLCA(root.right, p, q);
+
+            if (leftChild != null && rightChild != null) return root;
+            return leftChild == null ? rightChild : leftChild;
         }
     }
 
